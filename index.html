@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>7ª Travesía MTB Tibirita 2026 – Resultados</title>
+  <meta name="description" content="Resultados oficiales de la 7ª Travesía MTB Tibirita 2026. Clasificación por categorías, filtro por nombre, placa, ciudad y país." />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --red:    #E31E24;
+      --green:  #1B7E3B;
+      --dark:   #111214;
+      --gray:   #1e2127;
+      --gray2:  #272b33;
+      --gray3:  #31363f;
+      --light:  #c8cdd6;
+      --muted:  #6b7280;
+      --white:  #f5f6fa;
+      --gold:   #f5c518;
+      --silver: #b0bec5;
+      --bronze: #cd7f32;
+      --dnf:    #4b1313;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--dark);
+      color: var(--white);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── HEADER ─────────────────────────────────── */
+    header {
+      background: linear-gradient(135deg, #0c0e11 0%, #181c22 60%, #1a0204 100%);
+      border-bottom: 3px solid var(--red);
+      padding: 18px 24px 14px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(6px);
+    }
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .logo-wrap img {
+      height: 72px;
+      object-fit: contain;
+      filter: drop-shadow(0 2px 8px rgba(227,30,36,.5));
+    }
+    .event-info { flex: 1; min-width: 220px; }
+    .event-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(1.2rem, 3.5vw, 2rem);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      line-height: 1.1;
+      color: var(--white);
+    }
+    .event-title span { color: var(--red); }
+    .event-subtitle {
+      font-size: .78rem;
+      color: var(--muted);
+      margin-top: 4px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+    .stats-bar {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+    .stat {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: var(--gray2);
+      border: 1px solid var(--gray3);
+      border-radius: 8px;
+      padding: 6px 14px;
+      min-width: 80px;
+    }
+    .stat-val { font-size: 1.1rem; font-weight: 800; color: var(--red); }
+    .stat-lbl { font-size: .62rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+
+    /* ── FILTERS ─────────────────────────────────── */
+    .filters-section {
+      background: var(--gray);
+      border-bottom: 1px solid var(--gray3);
+      padding: 16px 24px;
+    }
+    .filters-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: flex-end;
+    }
+    .filter-group { display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 150px; }
+    .filter-group label {
+      font-size: .68rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+    .filter-group input,
+    .filter-group select {
+      background: var(--gray2);
+      border: 1px solid var(--gray3);
+      color: var(--white);
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-size: .88rem;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      transition: border-color .2s;
+      width: 100%;
+    }
+    .filter-group input:focus,
+    .filter-group select:focus { border-color: var(--red); }
+
+    .btn-clear {
+      background: transparent;
+      border: 1px solid var(--red);
+      color: var(--red);
+      border-radius: 8px;
+      padding: 8px 18px;
+      font-size: .84rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .2s, color .2s;
+      white-space: nowrap;
+      align-self: flex-end;
+    }
+    .btn-clear:hover { background: var(--red); color: #fff; }
+
+    /* ── TABS ────────────────────────────────────── */
+    .tabs-section {
+      background: var(--gray);
+      padding: 0 24px;
+      border-bottom: 2px solid var(--gray3);
+      overflow-x: auto;
+    }
+    .tabs-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      gap: 0;
+    }
+    .tab-btn {
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-family: 'Inter', sans-serif;
+      font-size: .8rem;
+      font-weight: 600;
+      padding: 13px 16px;
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      transition: color .2s, border-color .2s;
+      white-space: nowrap;
+      text-transform: uppercase;
+      letter-spacing: .8px;
+    }
+    .tab-btn:hover { color: var(--white); }
+    .tab-btn.active { color: var(--red); border-bottom-color: var(--red); }
+
+    /* ── MAIN ────────────────────────────────────── */
+    main { flex: 1; padding: 24px; }
+    .main-inner { max-width: 1200px; margin: 0 auto; }
+
+    .results-count {
+      font-size: .8rem;
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+    .results-count strong { color: var(--white); }
+
+    /* ── CATEGORY BLOCK ─────────────────────────── */
+    .category-block {
+      margin-bottom: 36px;
+      background: var(--gray);
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid var(--gray3);
+      box-shadow: 0 4px 24px rgba(0,0,0,.4);
+    }
+    .category-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 20px;
+      background: linear-gradient(90deg, rgba(227,30,36,.15) 0%, rgba(27,126,59,.07) 100%);
+      border-bottom: 1px solid var(--gray3);
+    }
+    .cat-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+    .cat-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .cat-badge {
+      font-size: .7rem;
+      background: var(--gray2);
+      border: 1px solid var(--gray3);
+      color: var(--muted);
+      border-radius: 20px;
+      padding: 3px 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+    .cat-count {
+      margin-left: auto;
+      font-size: .8rem;
+      color: var(--muted);
+    }
+
+    /* ── TABLE ───────────────────────────────────── */
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: .85rem; }
+    thead tr { background: var(--gray3); }
+    th {
+      padding: 10px 14px;
+      text-align: left;
+      font-size: .67rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: var(--muted);
+    }
+    th:first-child { text-align: center; }
+    tbody tr {
+      border-bottom: 1px solid rgba(255,255,255,.04);
+      transition: background .15s;
+    }
+    tbody tr:hover { background: rgba(255,255,255,.04); }
+    tbody tr.dnf-row { background: rgba(75,19,19,.35); opacity: .75; }
+    tbody tr.dnf-row:hover { background: rgba(75,19,19,.5); }
+    td { padding: 10px 14px; color: var(--light); }
+    td:first-child { text-align: center; }
+
+    .pos-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      font-weight: 800;
+      font-size: .85rem;
+    }
+    .pos-1 { background: rgba(245,197,24,.15); color: var(--gold); border: 2px solid var(--gold); }
+    .pos-2 { background: rgba(176,190,197,.12); color: var(--silver); border: 2px solid var(--silver); }
+    .pos-3 { background: rgba(205,127,50,.15); color: var(--bronze); border: 2px solid var(--bronze); }
+    .pos-other { background: var(--gray3); color: var(--muted); font-weight: 600; }
+    .pos-dnf { color: #e55; font-size: .72rem; font-weight: 800; letter-spacing: 1px; }
+
+    .plate {
+      display: inline-block;
+      background: var(--gray3);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 6px;
+      padding: 2px 9px;
+      font-weight: 700;
+      font-size: .88rem;
+      color: var(--white);
+      letter-spacing: .5px;
+    }
+
+    .participant-name { font-weight: 600; color: var(--white); }
+
+    .time-val { font-family: monospace; font-size: .92rem; color: var(--green); font-weight: 700; }
+    .time-diff { font-size: .78rem; color: var(--muted); font-family: monospace; }
+    .time-na { color: var(--muted); font-style: italic; font-size: .8rem; }
+
+    .vueltas-badge {
+      display: inline-block;
+      background: rgba(27,126,59,.15);
+      border: 1px solid rgba(27,126,59,.3);
+      color: var(--green);
+      border-radius: 20px;
+      padding: 2px 10px;
+      font-size: .75rem;
+      font-weight: 700;
+    }
+
+    /* ── NO RESULTS ──────────────────────────────── */
+    .no-results {
+      text-align: center;
+      padding: 60px 20px;
+    }
+    .no-results .icon { font-size: 3rem; margin-bottom: 12px; }
+    .no-results p { color: var(--muted); font-size: .95rem; }
+
+    /* ── FOOTER ──────────────────────────────────── */
+    footer {
+      background: linear-gradient(90deg, #0c0e11 0%, #10130f 50%, #0c0e11 100%);
+      border-top: 2px solid var(--red);
+      padding: 20px 24px;
+      text-align: center;
+    }
+    .footer-logo { height: 48px; margin-bottom: 10px; filter: brightness(.85); }
+    .footer-text {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--green);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+    .footer-sub {
+      font-size: .72rem;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+    .footer-sub a { color: var(--red); text-decoration: none; }
+    .footer-sub a:hover { text-decoration: underline; }
+
+    /* ── RESPONSIVE ─────────────────────────────── */
+    @media (max-width: 640px) {
+      header, .filters-section, .tabs-section, main { padding-left: 12px; padding-right: 12px; }
+      .stat { min-width: 64px; padding: 5px 10px; }
+      th, td { padding: 8px 10px; }
+      .logo-wrap img { height: 54px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <div class="logo-wrap">
+      <img src="logo/Nuevologo.png" alt="TCT Colombia Logo" />
+    </div>
+    <div class="event-info">
+      <div class="event-title"><span>7ª</span> Travesía MTB Tibirita 2026</div>
+      <div class="event-subtitle">Clasificación por Categorías · Etapa Única</div>
+      <div class="stats-bar">
+        <div class="stat"><span class="stat-val">38.5</span><span class="stat-lbl">Km Dist.</span></div>
+        <div class="stat"><span class="stat-val">14.03</span><span class="stat-lbl">Km/h Prom.</span></div>
+        <div class="stat"><span class="stat-val">2:44:35</span><span class="stat-lbl">1er Tiempo</span></div>
+        <div class="stat"><span class="stat-val" id="totalParticipants">-</span><span class="stat-lbl">Participantes</span></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- FILTERS -->
+<div class="filters-section">
+  <div class="filters-inner">
+    <div class="filter-group">
+      <label>🔍 Buscar Nombre</label>
+      <input type="text" id="fNombre" placeholder="Ej: Laura, Rodriguez..." />
+    </div>
+    <div class="filter-group">
+      <label>🪧 Número de Placa</label>
+      <input type="text" id="fPlaca" placeholder="Ej: 12, 41..." />
+    </div>
+    <div class="filter-group">
+      <label>🏙️ Ciudad</label>
+      <input type="text" id="fCiudad" placeholder="Ej: Bogotá, Macheta..." />
+    </div>
+    <div class="filter-group">
+      <label>🌍 País</label>
+      <select id="fPais">
+        <option value="">Todos los países</option>
+        <option value="COL">Colombia</option>
+        <option value="ITA">Italia (ITA)</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <label>📊 Estado</label>
+      <select id="fEstado">
+        <option value="">Todos</option>
+        <option value="finisher">Finishers</option>
+        <option value="dnf">DNF</option>
+      </select>
+    </div>
+    <button class="btn-clear" onclick="clearFilters()">✕ Limpiar</button>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs-section">
+  <div class="tabs-inner" id="tabsContainer"></div>
+</div>
+
+<!-- MAIN -->
+<main>
+  <div class="main-inner">
+    <p class="results-count" id="resultsCount"></p>
+    <div id="resultsContainer"></div>
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <img src="logo/Nuevologo.png" alt="TCT Logo" class="footer-logo" />
+  <div class="footer-text">TCT Innovando el cronometraje electrónico de Colombia..</div>
+  <div class="footer-sub">
+    <a href="https://tctcolombia.info" target="_blank">tctcolombia.info</a> &nbsp;|&nbsp;
+    <a href="tel:+573102314573">+57 310 231 4573</a>
+  </div>
+</footer>
+
+<script>
+// ╔══════════════════════════════════════════════╗
+// ║             RACE DATA – 7ª MTB TIBIRITA 2026  ║
+// ╚══════════════════════════════════════════════╝
+const categories = [
+  {
+    id: "damas-maravillas",
+    name: "Damas",
+    badge: "Maravillas",
+    icon: "🚴‍♀️",
+    color: "#E31E24",
+    participants: [
+      { pos:1,  plate:12, name:"Laura Camila Pirateque Herrera",  ciudad:"Chia",        pais:"COL", vueltas:5, tiempo:"2:44:35", dif:"--"       },
+      { pos:2,  plate:18, name:"Giovanna Diaz",                   ciudad:"Bogotá",       pais:"COL", vueltas:5, tiempo:"3:08:48", dif:"+24:13"    },
+      { pos:3,  plate:17, name:"Dina Yuliet Espinosa Espinosa",   ciudad:"Macheta",      pais:"COL", vueltas:5, tiempo:"3:27:18", dif:"+42:43"    },
+      { pos:4,  plate:19, name:"Verónica Rodríguez",              ciudad:"Gachancipa",   pais:"COL", vueltas:5, tiempo:"3:29:42", dif:"+45:07"    },
+      { pos:5,  plate:20, name:"Tatiana Sánchez Peña",            ciudad:"Tenjo",        pais:"COL", vueltas:5, tiempo:"4:01:41", dif:"+1:17:06"  },
+      { pos:6,  plate:14, name:"Geraldine Isabel Garavito",       ciudad:"Bogotá",       pais:"COL", vueltas:5, tiempo:"4:28:01", dif:"+1:43:26"  },
+      { pos:7,  plate:16, name:"Diana Carolina Acero Acero",      ciudad:"Suesca",       pais:"COL", vueltas:5, tiempo:"4:40:01", dif:"+1:55:26"  },
+      { pos:8,  plate:15, name:"Sofia Agulera",                   ciudad:"Gachalá",      pais:"COL", vueltas:5, tiempo:"4:53:01", dif:"+2:08:26"  },
+      { pos:"DNF", plate:13, name:"Lizeth Tatiana Vivas Acosta",  ciudad:"Bogotá",       pais:"COL", vueltas:"-", tiempo:"--",  dif:"--"          },
+    ]
+  },
+  {
+    id: "open-maravillas",
+    name: "Open",
+    badge: "Maravillas · 18–29 años",
+    icon: "⚡",
+    color: "#E31E24",
+    participants: [
+      { pos:1, plate:11, name:"Juan Pablo Pavon Parada",         ciudad:"Úmbita",      pais:"COL", vueltas:5, tiempo:"1:55:19", dif:"--"       },
+      { pos:2, plate:5,  name:"Yorman Andrés Palacios",          ciudad:"La Capilla",  pais:"COL", vueltas:5, tiempo:"2:13:56", dif:"+18:37"   },
+      { pos:3, plate:9,  name:"Luis Robertine Vivas Segura",     ciudad:"Tibirita",    pais:"COL", vueltas:5, tiempo:"2:28:37", dif:"+33:18"   },
+      { pos:4, plate:6,  name:"Diego Campos",                    ciudad:"La Capilla",  pais:"COL", vueltas:5, tiempo:"2:52:40", dif:"+57:21"   },
+      { pos:5, plate:7,  name:"Carlos Santiago Bernal",          ciudad:"Chía",        pais:"COL", vueltas:5, tiempo:"3:02:49", dif:"+1:07:30" },
+      { pos:6, plate:10, name:"Brandon Buitrago",                ciudad:"Bogotá",      pais:"COL", vueltas:5, tiempo:"3:07:44", dif:"+1:12:25" },
+      { pos:7, plate:2,  name:"Juan David Celis Ardila",         ciudad:"Bogotá",      pais:"COL", vueltas:4, tiempo:"3:42:01", dif:"+1:46:42" },
+      { pos:"DNF", plate:4, name:"Brayan Andres Martin Medina",  ciudad:"Bogotá",      pais:"COL", vueltas:"-", tiempo:"--", dif:"--"         },
+    ]
+  },
+  {
+    id: "master-a-maravillas",
+    name: "Master A",
+    badge: "Maravillas · 30–39 años",
+    icon: "🏆",
+    color: "#1B7E3B",
+    participants: [
+      { pos:1,  plate:41, name:"Luis Andrés Rodríguez",              ciudad:"Gachancipa",          pais:"COL", vueltas:5, tiempo:"2:07:45", dif:"--"        },
+      { pos:2,  plate:42, name:"Alexis Orjuela Alvarado",            ciudad:"Chía",                pais:"COL", vueltas:5, tiempo:"2:08:40", dif:"+0:55"     },
+      { pos:3,  plate:44, name:"Luis Carlos Garcia",                 ciudad:"Villapinzón",         pais:"COL", vueltas:5, tiempo:"2:15:26", dif:"+7:41"     },
+      { pos:4,  plate:27, name:"Fredy Caldas",                       ciudad:"Macheta",             pais:"COL", vueltas:5, tiempo:"2:17:00", dif:"+9:15"     },
+      { pos:5,  plate:37, name:"Andres Duque",                       ciudad:"Soacha",              pais:"COL", vueltas:5, tiempo:"2:21:42", dif:"+13:57"    },
+      { pos:6,  plate:31, name:"Elmer Alfonso Peña Solano",          ciudad:"Gama Cundinamarca",   pais:"COL", vueltas:5, tiempo:"2:32:44", dif:"+24:59"    },
+      { pos:7,  plate:30, name:"Jhon Fredy Guerrero Guerrero",       ciudad:"La Capilla Boyacá",   pais:"COL", vueltas:5, tiempo:"2:41:02", dif:"+33:17"    },
+      { pos:8,  plate:40, name:"Diego Mendoza",                      ciudad:"Sutatenza",           pais:"COL", vueltas:5, tiempo:"2:41:33", dif:"+33:48"    },
+      { pos:9,  plate:38, name:"Yeison Arvey Bernal Macias",         ciudad:"Garagoa",             pais:"COL", vueltas:5, tiempo:"2:47:41", dif:"+39:56"    },
+      { pos:10, plate:28, name:"Marco Antonio Mendez Almonacid",     ciudad:"Manta Cundinamarca",  pais:"COL", vueltas:5, tiempo:"2:53:36", dif:"+45:51"    },
+      { pos:11, plate:24, name:"Juan Manuel Muñoz Castro",           ciudad:"Machetá",             pais:"COL", vueltas:5, tiempo:"2:59:12", dif:"+51:27"    },
+      { pos:12, plate:86, name:"Cristian Camilo Robles Bernal",      ciudad:"Macheta",             pais:"COL", vueltas:5, tiempo:"3:12:43", dif:"+1:04:58"  },
+      { pos:13, plate:22, name:"Omar Felipe Ramírez Vivas",          ciudad:"Tibirita",            pais:"COL", vueltas:5, tiempo:"3:27:09", dif:"+1:19:24"  },
+      { pos:14, plate:36, name:"José Johanny Castelblanco Gamba",    ciudad:"Bogotá",              pais:"COL", vueltas:5, tiempo:"3:28:14", dif:"+1:20:29"  },
+      { pos:15, plate:29, name:"Sebastian Guzman",                   ciudad:"Gachalá",             pais:"COL", vueltas:5, tiempo:"4:31:01", dif:"+2:23:16"  },
+      { pos:16, plate:39, name:"Jorge Andres Peñaloza Lopez",        ciudad:"Guateque",            pais:"COL", vueltas:5, tiempo:"4:50:01", dif:"+2:42:16"  },
+      { pos:"DNF", plate:23, name:"Jose Sixto Gutierrez",            ciudad:"Tibirita",            pais:"COL", vueltas:"-", tiempo:"--", dif:"--"           },
+    ]
+  },
+  {
+    id: "master-b-maravillas",
+    name: "Master B",
+    badge: "Maravillas · 40–49 años",
+    icon: "🥇",
+    color: "#1B7E3B",
+    participants: [
+      { pos:1,     plate:35, name:"Diego Armando Lopez",                ciudad:"Villapinzón",          pais:"COL", vueltas:5, tiempo:"2:04:13", dif:"--"       },
+      { pos:2,     plate:57, name:"Rafael Malagón Torres",              ciudad:"Chía Cundinamarca",    pais:"COL", vueltas:5, tiempo:"2:19:42", dif:"+15:29"   },
+      { pos:3,     plate:61, name:"Nelson Garzón",                      ciudad:"Macheta",              pais:"COL", vueltas:5, tiempo:"2:22:24", dif:"+18:11"   },
+      { pos:4,     plate:46, name:"Adrian Gutiérrez Rojas",             ciudad:"Tibirita",             pais:"COL", vueltas:5, tiempo:"2:35:54", dif:"+31:41"   },
+      { pos:5,     plate:62, name:"Mauricio Ruiz Reyes",                ciudad:"Guayatá",              pais:"COL", vueltas:5, tiempo:"2:37:18", dif:"+33:05"   },
+      { pos:6,     plate:51, name:"Wilder Andres Guerrero Hurtado",     ciudad:"Bogotá",               pais:"COL", vueltas:5, tiempo:"2:57:47", dif:"+53:34"   },
+      { pos:7,     plate:45, name:"Rolando Gutierrez Rojas",            ciudad:"Tibirita",             pais:"COL", vueltas:5, tiempo:"3:14:06", dif:"+1:09:53" },
+      { pos:8,     plate:55, name:"Álvaro Harvey Martín Peñuela",       ciudad:"Gama Cundinamarca",    pais:"COL", vueltas:5, tiempo:"3:17:58", dif:"+1:13:45" },
+      { pos:9,     plate:43, name:"Yohon Freddy Cardozo Macías",        ciudad:"Guayatá",              pais:"COL", vueltas:5, tiempo:"3:18:59", dif:"+1:14:46" },
+      { pos:10,    plate:60, name:"Guillermo Rubiano",                   ciudad:"Guateque",             pais:"COL", vueltas:5, tiempo:"3:32:59", dif:"+1:28:46" },
+      { pos:11,    plate:49, name:"Alejandro Olmos",                     ciudad:"Bogotá",               pais:"COL", vueltas:5, tiempo:"3:33:43", dif:"+1:29:30" },
+      { pos:12,    plate:52, name:"Javier Martin Hernandez",             ciudad:"Bogotá",               pais:"COL", vueltas:5, tiempo:"3:42:50", dif:"+1:38:37" },
+      { pos:13,    plate:53, name:"Wilson Martin Ayala",                 ciudad:"Bogotá",               pais:"COL", vueltas:5, tiempo:"4:43:02", dif:"+2:38:49" },
+      { pos:"DNF", plate:59, name:"Julio Cesar Soler Melo",             ciudad:"Mosquera Cundinamarca",pais:"COL", vueltas:"-", tiempo:"--", dif:"--"        },
+      { pos:"DNF", plate:54, name:"Danilo Carranza",                    ciudad:"Bogotá",               pais:"COL", vueltas:"-", tiempo:"--", dif:"--"        },
+      { pos:"DNF", plate:47, name:"Geovanny Andres Melgarejo Guerrero", ciudad:"Tibirita",             pais:"COL", vueltas:"-", tiempo:"--", dif:"--"        },
+    ]
+  },
+  {
+    id: "master-c-maravillas",
+    name: "Master C",
+    badge: "Maravillas · +50 años",
+    icon: "⭐",
+    color: "#1B7E3B",
+    participants: [
+      { pos:1,     plate:70, name:"Andrea Bianco",                    ciudad:"Tocancipá",            pais:"ITA", vueltas:5, tiempo:"2:42:10", dif:"--"      },
+      { pos:2,     plate:64, name:"Rubén Mendoza Muñoz",              ciudad:"Sutatenza",            pais:"COL", vueltas:5, tiempo:"2:53:48", dif:"+11:38"  },
+      { pos:3,     plate:67, name:"Norland Salamanca Cabello",        ciudad:"Bogotá",               pais:"COL", vueltas:5, tiempo:"3:18:47", dif:"+36:37"  },
+      { pos:4,     plate:69, name:"Neftalí Caldas Torres",            ciudad:"Macheta",              pais:"COL", vueltas:5, tiempo:"3:28:34", dif:"+46:24"  },
+      { pos:5,     plate:68, name:"Fernando Castro Delgado",          ciudad:"Mosquera Cundinamarca",pais:"COL", vueltas:5, tiempo:"3:31:53", dif:"+49:43"  },
+      { pos:6,     plate:63, name:"Nestor Alfredo Piñeros Pineda",    ciudad:"Bogotá D.C.",          pais:"COL", vueltas:5, tiempo:"3:37:32", dif:"+55:22"  },
+      { pos:"DNF", plate:65, name:"Carlos Orlando Bernal Cuadros",   ciudad:"Chía",                 pais:"COL", vueltas:"-", tiempo:"--", dif:"--"        },
+    ]
+  },
+  {
+    id: "damas-exploradores",
+    name: "Damas",
+    badge: "Exploradores",
+    icon: "🌟",
+    color: "#c0a800",
+    participants: [
+      { pos:1, plate:91, name:"Esperanza Hernández Vivas",          ciudad:"Tibirita",   pais:"COL", vueltas:2, tiempo:"1:45:08", dif:"--"       },
+      { pos:2, plate:97, name:"Adriana Lopez Guerrero",             ciudad:"Manta",      pais:"COL", vueltas:2, tiempo:"1:51:21", dif:"+6:13"    },
+      { pos:3, plate:95, name:"Paola Arias",                        ciudad:"Tibirita",   pais:"COL", vueltas:2, tiempo:"1:56:34", dif:"+11:26"   },
+      { pos:4, plate:92, name:"Luisa Fernanda Jiménez Romero",      ciudad:"Tibirita",   pais:"COL", vueltas:2, tiempo:"2:02:53", dif:"+17:45"   },
+      { pos:5, plate:98, name:"Diana Marcela López Guerrero",       ciudad:"Bogotá",     pais:"COL", vueltas:2, tiempo:"2:53:55", dif:"+1:08:47" },
+    ]
+  },
+  {
+    id: "hombres-exploradores",
+    name: "Hombres",
+    badge: "Exploradores",
+    icon: "🚵",
+    color: "#c0a800",
+    participants: [
+      { pos:1,  plate:8,  name:"Jhonatan David Mora Segura",       ciudad:"Chocontá Cundinamarca",pais:"COL", vueltas:2, tiempo:"1:06:23", dif:"--"      },
+      { pos:2,  plate:72, name:"Carlos Henry Parra Giraldo",       ciudad:"Chocontá",             pais:"COL", vueltas:2, tiempo:"1:17:12", dif:"+10:49"  },
+      { pos:3,  plate:80, name:"Antonio Zamora Romero",            ciudad:"Tibirita",             pais:"COL", vueltas:2, tiempo:"1:18:23", dif:"+12:00"  },
+      { pos:4,  plate:74, name:"Camilo Andres Vivas Martín",       ciudad:"Tibirita Cundinamarca",pais:"COL", vueltas:2, tiempo:"1:24:28", dif:"+18:05"  },
+      { pos:5,  plate:75, name:"Oscar Soto",                       ciudad:"Tibirita",             pais:"COL", vueltas:2, tiempo:"1:28:24", dif:"+22:01"  },
+      { pos:6,  plate:79, name:"Abel Moreno Moreno",               ciudad:"Bogotá",               pais:"COL", vueltas:2, tiempo:"1:33:47", dif:"+27:24"  },
+      { pos:7,  plate:84, name:"Hugo Ramirez Carvajal",            ciudad:"Bogotá",               pais:"COL", vueltas:2, tiempo:"1:34:01", dif:"+27:38"  },
+      { pos:8,  plate:76, name:"Gustavo Rojas",                    ciudad:"Tibirita",             pais:"COL", vueltas:2, tiempo:"1:36:20", dif:"+29:57"  },
+      { pos:9,  plate:81, name:"José Mario Bermudez Guerrero",     ciudad:"Bogotá",               pais:"COL", vueltas:2, tiempo:"1:39:20", dif:"+32:57"  },
+      { pos:10, plate:71, name:"Helvert Alexis Celis Garcia",      ciudad:"Bogotá",               pais:"COL", vueltas:2, tiempo:"1:42:58", dif:"+36:35"  },
+      { pos:11, plate:77, name:"Luis Vivas",                       ciudad:"Tibirita",             pais:"COL", vueltas:2, tiempo:"1:45:53", dif:"+39:30"  },
+      { pos:12, plate:50, name:"Jairo Armando Pabón Carranza",     ciudad:"Bogotá",               pais:"COL", vueltas:2, tiempo:"1:48:19", dif:"+41:56"  },
+      { pos:13, plate:82, name:"Joan Bermudez",                    ciudad:"Bogotá",               pais:"COL", vueltas:2, tiempo:"1:48:54", dif:"+42:31"  },
+      { pos:14, plate:78, name:"Juan Carlos Pérez Villalba",       ciudad:"Bogotá",               pais:"COL", vueltas:2, tiempo:"1:59:25", dif:"+53:02"  },
+      { pos:15, plate:48, name:"Carlos Torres",                    ciudad:"Tibirita",             pais:"COL", vueltas:2, tiempo:"2:04:23", dif:"+58:00"  },
+    ]
+  },
+];
+
+// ── State ─────────────────────────────────────────
+let activeCategory = "all";
+let filters = { nombre: "", placa: "", ciudad: "", pais: "", estado: "" };
+
+// ── Total participants ─────────────────────────────
+const total = categories.reduce((s, c) => s + c.participants.length, 0);
+document.getElementById("totalParticipants").textContent = total;
+
+// ── Build tabs ─────────────────────────────────────
+function buildTabs() {
+  const container = document.getElementById("tabsContainer");
+  container.innerHTML = "";
+
+  const allBtn = document.createElement("button");
+  allBtn.className = "tab-btn" + (activeCategory === "all" ? " active" : "");
+  allBtn.textContent = "Todas";
+  allBtn.onclick = () => { activeCategory = "all"; build(); };
+  container.appendChild(allBtn);
+
+  categories.forEach(cat => {
+    const btn = document.createElement("button");
+    btn.className = "tab-btn" + (activeCategory === cat.id ? " active" : "");
+    btn.textContent = cat.name + " – " + cat.badge;
+    btn.onclick = () => { activeCategory = cat.id; build(); };
+    container.appendChild(btn);
+  });
+}
+
+// ── Filter logic ───────────────────────────────────
+function matchesFilters(p) {
+  const n = filters.nombre.toLowerCase();
+  const pl = filters.placa;
+  const c = filters.ciudad.toLowerCase();
+  const pa = filters.pais;
+  const est = filters.estado;
+  const isDNF = p.pos === "DNF";
+
+  if (n  && !p.name.toLowerCase().includes(n))   return false;
+  if (pl && !String(p.plate).includes(pl))        return false;
+  if (c  && !p.ciudad.toLowerCase().includes(c))  return false;
+  if (pa && !p.pais.includes(pa.replace("COL","COL").replace("ITA","ITA"))) return false;
+  if (pa === "COL" && p.pais !== "COL")            return false;
+  if (pa === "ITA" && p.pais !== "ITA")            return false;
+  if (est === "finisher" && isDNF)                 return false;
+  if (est === "dnf"      && !isDNF)                return false;
+  return true;
+}
+
+// ── Render ─────────────────────────────────────────
+function renderCategory(cat) {
+  const participants = cat.participants.filter(matchesFilters);
+  if (participants.length === 0) return null;
+
+  const block = document.createElement("div");
+  block.className = "category-block";
+
+  block.innerHTML = `
+    <div class="category-header">
+      <div class="cat-icon" style="background:${cat.color}22; border:2px solid ${cat.color}55; color:${cat.color}">
+        ${cat.icon}
+      </div>
+      <div>
+        <div class="cat-name" style="color:${cat.color}">${cat.name}</div>
+        <span class="cat-badge">${cat.badge}</span>
+      </div>
+      <div class="cat-count">${participants.length} participant${participants.length!==1?"es":"e"}</div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Pos.</th>
+            <th>Placa</th>
+            <th>Nombre</th>
+            <th>Ciudad</th>
+            <th>País</th>
+            <th style="text-align:center">Vueltas</th>
+            <th>Tiempo</th>
+            <th>Diferencia</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${participants.map(p => renderRow(p)).join("")}
+        </tbody>
+      </table>
+    </div>
+  `;
+  return block;
+}
+
+function posBadge(pos) {
+  if (pos === "DNF") return `<span class="pos-dnf">DNF</span>`;
+  if (pos === 1)     return `<span class="pos-badge pos-1">1</span>`;
+  if (pos === 2)     return `<span class="pos-badge pos-2">2</span>`;
+  if (pos === 3)     return `<span class="pos-badge pos-3">3</span>`;
+  return `<span class="pos-badge pos-other">${pos}</span>`;
+}
+
+function paisFlag(pais) {
+  if (pais === "ITA") return "🇮🇹 ITA";
+  return "🇨🇴 COL";
+}
+
+function renderRow(p) {
+  const isDNF = p.pos === "DNF";
+  const tiempo = isDNF
+    ? `<span class="time-na">—</span>`
+    : `<span class="time-val">${p.tiempo}</span>`;
+  const dif = isDNF || p.dif === "--"
+    ? `<span class="time-na">—</span>`
+    : `<span class="time-diff">${p.dif}</span>`;
+  const vueltas = isDNF
+    ? `<span class="time-na">—</span>`
+    : `<span class="vueltas-badge">${p.vueltas}</span>`;
+
+  return `<tr class="${isDNF ? "dnf-row" : ""}">
+    <td>${posBadge(p.pos)}</td>
+    <td><span class="plate">${p.plate}</span></td>
+    <td><span class="participant-name">${p.name}</span></td>
+    <td>${p.ciudad}</td>
+    <td style="white-space:nowrap">${paisFlag(p.pais)}</td>
+    <td style="text-align:center">${vueltas}</td>
+    <td>${tiempo}</td>
+    <td>${dif}</td>
+  </tr>`;
+}
+
+function build() {
+  buildTabs();
+  const container = document.getElementById("resultsContainer");
+  container.innerHTML = "";
+
+  const catsToRender = activeCategory === "all"
+    ? categories
+    : categories.filter(c => c.id === activeCategory);
+
+  let totalShown = 0;
+  let rendered = 0;
+
+  catsToRender.forEach(cat => {
+    const el = renderCategory(cat);
+    if (el) {
+      container.appendChild(el);
+      totalShown += cat.participants.filter(matchesFilters).length;
+      rendered++;
+    }
+  });
+
+  if (rendered === 0) {
+    container.innerHTML = `
+      <div class="no-results">
+        <div class="icon">🏔️</div>
+        <p>No se encontraron participantes con ese criterio de búsqueda.</p>
+      </div>`;
+  }
+
+  document.getElementById("resultsCount").innerHTML =
+    `Mostrando <strong>${totalShown}</strong> participante${totalShown!==1?"s":""} de <strong>${total}</strong> en total`;
+}
+
+// ── Wire filters ───────────────────────────────────
+function wireFilter(id, key) {
+  document.getElementById(id).addEventListener("input", e => {
+    filters[key] = e.target.value.trim();
+    activeCategory = "all";
+    build();
+  });
+}
+
+wireFilter("fNombre", "nombre");
+wireFilter("fPlaca",  "placa");
+wireFilter("fCiudad", "ciudad");
+
+document.getElementById("fPais").addEventListener("change", e => {
+  filters.pais = e.target.value;
+  activeCategory = "all";
+  build();
+});
+document.getElementById("fEstado").addEventListener("change", e => {
+  filters.estado = e.target.value;
+  activeCategory = "all";
+  build();
+});
+
+function clearFilters() {
+  filters = { nombre: "", placa: "", ciudad: "", pais: "", estado: "" };
+  document.getElementById("fNombre").value = "";
+  document.getElementById("fPlaca").value  = "";
+  document.getElementById("fCiudad").value = "";
+  document.getElementById("fPais").value   = "";
+  document.getElementById("fEstado").value = "";
+  activeCategory = "all";
+  build();
+}
+
+// ── Init ───────────────────────────────────────────
+build();
+</script>
+</body>
+</html>
