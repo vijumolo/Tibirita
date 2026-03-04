@@ -14,6 +14,8 @@
   <!-- PDF Handlers -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+  <script src="exploradores_b64.js"></script>
+  <script src="maravillas_b64.js"></script>
 
   <style>
     :root {
@@ -1023,20 +1025,27 @@
       return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     }
 
+    function base64ToUint8Array(base64) {
+      const binaryString = window.atob(base64);
+      const len = binaryString.length;
+      const bytes = new Uint8Array(len);
+      for (let i = 0; i < len; i++) {
+        bytes[i] = binaryString.charCodeAt(i);
+      }
+      return bytes;
+    }
+
     window.descargarDiploma = async function (nombre, isMaravillas, btnElement) {
       const originalText = btnElement.innerHTML;
       btnElement.innerHTML = "⏳ Buscando...";
       btnElement.disabled = true;
 
       try {
-        const pdfUrl = isMaravillas ? 'Diplomas/MARAVILLAS.pdf' : 'Diplomas/EXPLORADORES.pdf';
+        const b64Data = isMaravillas ? maravillasB64 : exploradoresB64;
 
-        // 1. Fetch PDF bytes
-        const pdfBytesResponse = await fetch(pdfUrl);
-        if (!pdfBytesResponse.ok) {
-          throw new Error("No se pudo cargar el archivo PDF original de diplomas. Asegúrese de que existe en: " + pdfUrl);
-        }
-        const pdfBuffer = await pdfBytesResponse.arrayBuffer();
+        // 1. Get PDF bytes from base64
+        const pdfBytesFromB64 = base64ToUint8Array(b64Data);
+        const pdfBuffer = pdfBytesFromB64.buffer;
 
         // 2. Load with PDF.js to search text
         btnElement.innerHTML = "⏳ Extrayendo...";
@@ -1099,7 +1108,7 @@
 
       } catch (error) {
         console.error(error);
-        alert("Hubo un error al generar el diploma. Nota: esta función requiere que la página se ejecute en un servidor web (no puede abrirse directamente con doble click).");
+        alert("Hubo un error al generar el diploma. Por favor, intente nuevamente.");
         btnElement.innerHTML = originalText;
         btnElement.disabled = false;
       }
